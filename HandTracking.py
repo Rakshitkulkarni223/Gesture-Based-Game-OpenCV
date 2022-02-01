@@ -18,13 +18,18 @@ while True:
 
     results=hands.process(imgRGB)
 
+    lmList=[]
+
     if results.multi_hand_landmarks:
         for handLms in results.multi_hand_landmarks:
             for id,lm  in enumerate(handLms.landmark):
                 h,w,c=img.shape
                 cx,cy=int(lm.x*w),int(lm.y*h)
+                lmList.append([id,cx,cy])
 
             mpDraw.draw_landmarks(img,handLms,mpHands.HAND_CONNECTIONS)
+
+    print(lmList)
 
     CTime=time.time()
     fps=1/(CTime-PTime)
