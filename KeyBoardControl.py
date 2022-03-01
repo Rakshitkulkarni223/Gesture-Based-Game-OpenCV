@@ -58,10 +58,14 @@ while True:
 
         print(totalFingers)
 
-        if totalFingers==5:
-            print("Right For Acceleration")
-        elif totalFingers==0:
-            print("Left For Break")
+        if totalFingers == 5:
+            pydirectinput.keyUp('right')
+            time.sleep(0.01)
+            pydirectinput.keyDown('left')
+        elif totalFingers == 0:
+            pydirectinput.keyUp('left')
+            time.sleep(0.01)
+            pydirectinput.keyDown('right')
 
         h, w, c = OverlayList[totalFingers-1].shape
         #
