@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/quiz_home.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<style>
+    .column {
+        display: inline-block;
+        padding-left: 1%;
+    }
+
+    .column1 {
+        float: left;
+        width: 48%;
+        padding: 2%;
+        margin-left: 1.5%;
+        /* margin-left: 0.5%; */
+        background-color: #3087F9;
+        border: 1px solid rgb(235, 113, 214);
+        border-radius: 25px;
+    }
+
+    .row1 {
+        padding: 2%;
+    }
+
+    /* Clear floats after the columns */
+    .row1:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    body {
+        background-image: url('https://i.pinimg.com/736x/56/6f/14/566f14057cde9bb7898d7f25d305528d.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+
+    }
+
+    #progressBar {
+        width: 100%;
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: #eeeeee;
+    }
+
+    progress::-webkit-progress-value {
+        background-color: #08ecb3 !important;
+    }
+
+    /* For IE10 */
+    progress {
+        background-color: #eee;
+    }
+
+    progress {
+        background-color: #f132a2;
+    }
+
+    /* .column1:hover {
+        background-color: rgb(245, 226, 58);
+        color: black;
+    } */
+</style>
+
+<body>
+    <progress value="0" max="20" id="progressBar"></progress>
+
+    <div class="row1">
+
+        <div class="column">
+
+            <div class="quiz_box" style="background: transparent;width: 60%;">
+
+                {% block content %}
+
+                <div class="container">
+
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-warning" style="color : red">
+
+
+                        <div class="row" style="margin-left: 4%;">
+
+                            <div class="column">
+                                <i class="material-icons" style="font-size:20px;color:red;margin-top:2px">error</i>
+                            </div>
+
+                            <div class="column">
+                                {{ message }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                    {% block page_content %}{% endblock %}
+                </div>
+                {% endblock %}
+
+                <form action='/check_answer' method='POST'>
+                    <section style="background:transparent;">
+                        <div class="que_text" style="background-color: #3087F9;padding: 1%;border: 1px solid rgb(235, 113, 214);
+                padding: 10px;
+                border-radius: 25px;">
+                            <p> {{qes}} </p>
+                        </div>
+                        <div class="option_list" style="color: yellow;margin-left: -1%;">
+
+                            <div class="row1">
+
+                                {% if choosen_opt == '' %}
+                                <div class="column1">
+                                    <input type='radio' value='{{ opt [0] }}' name='{{qes}}' />{{ opt [0] }}
+                                </div>
+
+                                {% elif choosen_opt == opt[0] and choosen_opt == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [0] }}' name='{{qes}}' />{{ opt [0] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and opt[0] == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [0] }}' name='{{qes}}' />{{ opt [0] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and choosen_opt == opt[0] %}
+                                <div class="column1" style="background-color: rgb(241, 238, 14);color: black;">
+                                    <input type='radio' value='{{ opt [0] }}' name='{{qes}}' />{{ opt [0] }}
+                                </div>
+
+                                {% else %}
+                                <div class="column1" style="background-color: rgb(247, 14, 6);color: black;">
+                                    <input type='radio' value='{{ opt [0] }}' name='{{qes}}' />{{ opt [0] }}
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if choosen_opt == '' %}
+                                <div class="column1">
+                                    <input type='radio' value='{{ opt [1] }}' name='{{qes}}' />{{ opt[1] }}
+                                </div>
+
+                                {% elif choosen_opt == opt[1] and choosen_opt == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt[1] }}' name='{{qes}}' />{{ opt[1] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and opt[1] == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [1] }}' name='{{qes}}' />{{ opt [1] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and choosen_opt == opt[1] %}
+                                <div class="column1" style="background-color: rgb(241, 238, 14);color: black;">
+                                    <input type='radio' value='{{ opt [1] }}' name='{{qes}}' />{{ opt [1] }}
+                                </div>
+
+                                {% else %}
+                                <div class="column1" style="background-color: rgb(247, 14, 6);color: black;">
+                                    <input type='radio' value='{{ opt[1] }}' name='{{qes}}' />{{ opt[1] }}
+                                </div>
+
+                                {% endif %}
+
+
+                            </div>
+
+                            <div class="row1">
+
+
+                                {% if choosen_opt == '' %}
+
+                                <div class="column1">
+                                    <input type='radio' value='{{ opt [2] }}' name='{{qes}}' />{{ opt [2] }}
+                                </div>
+
+                                {% elif choosen_opt == opt [2] and choosen_opt == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [2] }}' name='{{qes}}' />{{ opt [2] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and opt[2] == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [2] }}' name='{{qes}}' />{{ opt [2] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and choosen_opt == opt[2] %}
+                                <div class="column1" style="background-color: rgb(241, 238, 14);color: black;">
+                                    <input type='radio' value='{{ opt [2] }}' name='{{qes}}' />{{ opt [2] }}
+                                </div>
+
+                                {% else %}
+                                <div class="column1" style="background-color: rgb(247, 14, 6);color: black;">
+                                    <input type='radio' value='{{ opt [2] }}' name='{{qes}}' />{{ opt [2] }}
+                                </div>
+
+                                {% endif %}
+
+
+                                {% if choosen_opt == '' %}
+                                <div class="column1">
+                                    <input type='radio' value='{{ opt [3] }}' name='{{qes}}' />{{ opt [3] }}
+                                </div>
+
+                                {% elif choosen_opt == opt [3] and choosen_opt == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [3] }}' name='{{qes}}' />{{ opt [3] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and opt[3] == crt_opt %}
+                                <div class="column1" style="background-color: rgb(13, 252, 33);color: black;">
+                                    <input type='radio' value='{{ opt [3] }}' name='{{qes}}' />{{ opt [3] }}
+                                </div>
+
+                                {% elif choosen_opt != '' and choosen_opt == opt[3] %}
+                                <div class="column1" style="background-color: rgb(241, 238, 14);color: black;">
+                                    <input type='radio' value='{{ opt [3] }}' name='{{qes}}' />{{ opt [3] }}
+                                </div>
+
+                                {% else %}
+                                <div class="column1" style="background-color: rgb(247, 14, 6);color: black;">
+                                    <input type='radio' value='{{ opt [3] }}' name='{{qes}}' />{{ opt [3] }}
+                                </div>
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+
+                    </section>
+
+
+                    <h4 style="margin-left:5%;color: rgb(9, 243, 28);">{{crt_answer}} </h4>
+
+                    {% for j in amount %}
+
+                    <img src={{j}} width="19%" height="19%">
+
+                    {% endfor %}
+
+
+                    <footer>
+                        <div class="total_que">
+                        </div>
+                        <input type="submit" id="submit_ans" class="submit_answer" value="Submit" />
+
+                    </footer>
+                </form>
+
+                <button class="next_btn" id="next"
+                    onclick="window.location.href='{{url_for('next_question')}}';">Next</button>
+            </div>
+        </div>
+        <div class="column">
+            {% if score != -1 %}
+
+            <h4 style="color: rgb(252, 5, 5);background-color: aqua;padding: 5px;border-radius: 5px;">Total Points : {{score}}</h4>
+
+            {% endif %}
+        </div>
+    </div>
+
+
+</body>
+
+<script>
+    var timeleft = 20
+
+    {% if choosen_opt == ''  %}
+
+    var downloadTimer = setInterval(function () {
+        if (timeleft <= 0) {
+            document.getElementById("submit_ans").click();
+            clearInterval(downloadTimer);
+        }
+        document.getElementById("progressBar").value = 20 - timeleft;
+        timeleft -= 1;
+    }, 1000);
+
+    {% else %}
+
+    document.getElementById("next").click();
+
+    {% endif %}
+
+</script>
+
+</html>
